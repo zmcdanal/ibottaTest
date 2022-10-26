@@ -1,12 +1,46 @@
 package com.ethereal.ibottaofferstest.screens
 
+import android.content.Context
+import android.util.Log
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.ethereal.ibottaofferstest.R
+import com.ethereal.ibottaofferstest.objects.Offer
 import com.ethereal.ibottaofferstest.ui.theme.IbottaOffersTestTheme
+import com.squareup.moshi.JsonAdapter
+import com.squareup.moshi.JsonDataException
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.Types
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import java.io.ByteArrayOutputStream
+
 
 @Composable
 fun OffersGridScreen() {
+    val context = LocalContext.current
+    val offers = readOffersFile(context, stringResource(id = R.string.offers))
 
+    offers?.forEach {
+        println("hey bobby ${it.url}")
+    }
+}
+
+private fun readOffersFile(context: Context, file: String): List<Offer>? {
+    try {
+        val jsonString = context.assets.open(file)
+        val baos = ByteArrayOutputStream()
+        jsonString.use { it.copyTo(baos) }
+        val inputAsString = baos.toString()
+        val dataType = Types.newParameterizedType(MutableList::class.java, Offer::class.java)
+        val adapter: JsonAdapter<List<Offer>> =
+            Moshi.Builder().add(KotlinJsonAdapterFactory()).build().adapter(dataType)
+        return adapter.fromJson(inputAsString)!!
+    } catch (ex: Exception) {
+        Log.e("OffersGridScreen", "readOffersFile: ", ex)
+    }
+    return null
 }
 
 @Preview
