@@ -93,7 +93,7 @@ fun OfferListItemCard(offer: Offer, onClick: () -> Unit) {
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = offer.current_value,
-                color = colorResource(id = R.color.amount_color),
+                color = MaterialTheme.colors.secondary,
                 fontSize = 12.sp,
                 fontFamily = FontFamily(Font(R.font.roboto_bold)),
                 fontWeight = FontWeight.Medium,
@@ -102,7 +102,7 @@ fun OfferListItemCard(offer: Offer, onClick: () -> Unit) {
             Spacer(modifier = Modifier.height(3.dp))
             Text(
                 text = offer.name,
-                color = colorResource(id = R.color.amount_color),
+                color = MaterialTheme.colors.secondary,
                 fontSize = 11.sp,
                 fontFamily = FontFamily(Font(R.font.roboto_regular)),
                 fontWeight = FontWeight.Medium,

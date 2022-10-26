@@ -1,6 +1,7 @@
 package com.ethereal.ibottaofferstest.screens
 
 import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -27,7 +28,11 @@ fun DetailsScreen(offersViewModel: OffersViewModel) {
                 },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(imageVector = Icons.Default.KeyboardArrowLeft, contentDescription = "Back")
+                        Icon(
+                            imageVector = Icons.Default.KeyboardArrowLeft,
+                            contentDescription = "Back",
+                            tint = MaterialTheme.colors.primaryVariant
+                        )
                     }
                 }
             )
