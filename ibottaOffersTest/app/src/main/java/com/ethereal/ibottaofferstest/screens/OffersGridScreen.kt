@@ -37,7 +37,7 @@ import com.ethereal.ibottaofferstest.view_models.OffersViewModel
 fun OffersGridScreen(offersViewModel: OffersViewModel) {
     val navController = LocalNavController.current
     var list by remember { mutableStateOf(offersViewModel.getOffers()) }
-    
+
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -49,13 +49,17 @@ fun OffersGridScreen(offersViewModel: OffersViewModel) {
                     )
                 },
                 actions = {
-                          IconButton(onClick = { list = offersViewModel.getOffers() }) {
-                              Icon(
-                                  painter = painterResource(id = R.drawable.filter_list_24),
-                                  tint = MaterialTheme.colors.secondary,
-                                  contentDescription = "Filter"
-                              )
-                          }
+                    IconButton(onClick = {
+                        offersViewModel.toggleFilter()
+                        list = offersViewModel.getOffers()
+                    }
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.filter_list_24),
+                            tint = MaterialTheme.colors.secondary,
+                            contentDescription = "Filter"
+                        )
+                    }
                 },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                     containerColor = MaterialTheme.colors.background
@@ -72,6 +76,7 @@ fun OffersGridScreen(offersViewModel: OffersViewModel) {
         )
 
         if (list.isNotEmpty()) {
+
             LazyVerticalGrid(
                 verticalArrangement = Arrangement.spacedBy(24.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -87,6 +92,7 @@ fun OffersGridScreen(offersViewModel: OffersViewModel) {
                 items(list) { item ->
                     OfferListItemCard(offer = item) {
                         offersViewModel.toggleFavorite(item)
+                        offersViewModel.setSelected(item)
                         navController.navigate(Routes.DetailsScreen.route)
                     }
                 }

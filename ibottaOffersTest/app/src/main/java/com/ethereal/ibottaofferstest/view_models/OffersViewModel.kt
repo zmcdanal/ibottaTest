@@ -12,10 +12,11 @@ import com.squareup.moshi.Types
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import java.io.ByteArrayOutputStream
 
-class OffersViewModel(val context: Context) : ViewModel() {
+class OffersViewModel(context: Context) : ViewModel() {
 
-    val offers = arrayListOf<Offer>().toMutableStateList()
-    var sorted = mutableStateOf(false)
+    private val offers = arrayListOf<Offer>().toMutableStateList()
+    private var currentSelection: MutableState<Offer?> = mutableStateOf(null)
+    private var sorted = mutableStateOf(false)
 
     init {
         try {
@@ -32,21 +33,30 @@ class OffersViewModel(val context: Context) : ViewModel() {
         }
     }
 
+    fun setSelected(offer: Offer) {
+        currentSelection.value = offer
+    }
+
+    fun getSelected(): Offer {
+        return currentSelection.value!!
+    }
+
+    fun toggleFilter() {
+        sorted.value = !sorted.value
+    }
+
     fun getOffers(): List<Offer> {
         return if (!sorted.value) {
-            sorted.value = !sorted.value
-            Toast.makeText(context, "Favorites First", Toast.LENGTH_SHORT).show()
             offers.sortedBy { !it.favorited }
         } else {
-            sorted.value = !sorted.value
-            Toast.makeText(context, "Favorites Only", Toast.LENGTH_SHORT).show()
             offers.filter { it.favorited }
         }
     }
 
     fun toggleFavorite(offer: Offer) {
         if (offers.contains(offer)) {
-            offers.find { it.id == offer.id }?.favorited = !offers.find { it.id == offer.id}?.favorited!!
+            offers.find { it.id == offer.id }?.favorited =
+                !offers.find { it.id == offer.id }?.favorited!!
         } else {
             Log.e("OffersViewModel", "toggleFavorite: Error finding offer in Offer List")
         }
