@@ -1,4 +1,4 @@
-package com.ethereal.ibottaofferstest
+package com.ethereal.ibottaofferstest.activities
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
