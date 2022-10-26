@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -18,7 +19,9 @@ import com.ethereal.ibottaofferstest.routes.Routes
 import com.ethereal.ibottaofferstest.screens.DetailsScreen
 import com.ethereal.ibottaofferstest.screens.OffersGridScreen
 import com.ethereal.ibottaofferstest.ui.theme.IbottaOffersTestTheme
+import com.ethereal.ibottaofferstest.utilities.viewModelProviderFactoryOf
 import com.ethereal.ibottaofferstest.view_models.LocalNavController
+import com.ethereal.ibottaofferstest.view_models.OffersViewModel
 import com.ethereal.ibottaofferstest.view_models.setupContext
 
 class MainActivity : ComponentActivity() {
@@ -26,6 +29,15 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             IbottaOffersTestTheme {
+                val offersViewModel: OffersViewModel = viewModel(
+                    key = "OffersViewModel",
+                    factory = viewModelProviderFactoryOf {
+                        OffersViewModel(
+                            context = this
+                        )
+                    }
+                )
+
                 val navController = rememberNavController()
                 setupContext(this)
 
@@ -37,11 +49,11 @@ class MainActivity : ComponentActivity() {
                     ) {
 
                         composable(Routes.OffersGridScreen.route) {
-                            OffersGridScreen()
+                            OffersGridScreen(offersViewModel = offersViewModel)
                         }
 
                         composable(Routes.DetailsScreen.route) {
-                            DetailsScreen()
+                            DetailsScreen(offersViewModel = offersViewModel)
                         }
                     }
                 }

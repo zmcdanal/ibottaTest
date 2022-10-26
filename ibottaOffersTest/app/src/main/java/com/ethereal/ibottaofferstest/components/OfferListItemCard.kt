@@ -5,6 +5,7 @@ import android.graphics.Typeface
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
@@ -34,9 +35,9 @@ import com.ethereal.ibottaofferstest.objects.Offer
 import com.ethereal.ibottaofferstest.ui.theme.IbottaOffersTestTheme
 
 @Composable
-fun OfferListItemCard(offer: Offer) {
+fun OfferListItemCard(offer: Offer, onClick: () -> Unit) {
     
-    Box {
+    Box(modifier = Modifier.clickable { onClick() }) {
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -129,6 +130,8 @@ fun OfferListItemCardPreview() {
                 terms = "Blah Blah Blah",
                 current_value = "5.99"
             )
-        )
+        ) {
+
+        }
     }
 }
