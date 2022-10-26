@@ -68,4 +68,7 @@ dependencies {
     implementation "com.squareup.moshi:moshi-kotlin:1.13.0"
     implementation "com.squareup.moshi:moshi-adapters:1.13.0"
     implementation "com.squareup.moshi:moshi-kotlin-codegen:1.13.0"
+
+    // Async Image
+    implementation 'io.coil-kt:coil-compose:2.1.0'
 }
