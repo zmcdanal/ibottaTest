@@ -2,14 +2,12 @@ package com.ethereal.ibottaofferstest.screens
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -49,6 +47,26 @@ fun OffersGridScreen(offersViewModel: OffersViewModel) {
                     )
                 },
                 actions = {
+                    BadgedBox(
+                        badge = {
+                            if (offersViewModel.getCart().isNotEmpty())
+                                Badge { Text(offersViewModel.getCart().size.toString()) }
+                        },
+                        modifier = Modifier
+                            .padding(end = 10.dp)
+                            .clickable {
+                                navController.navigate(Routes.CartScreen.route)
+                            }
+                    ) {
+
+                        Icon(
+                            painter = painterResource(id = R.drawable.shopping_cart_24),
+                            tint = MaterialTheme.colors.primary,
+                            contentDescription = "Cart"
+                        )
+                    }
+                },
+                navigationIcon = {
                     IconButton(onClick = {
                         offersViewModel.toggleFilter()
                         list = offersViewModel.getOffers()
@@ -91,7 +109,6 @@ fun OffersGridScreen(offersViewModel: OffersViewModel) {
             ) {
                 items(list) { item ->
                     OfferListItemCard(offer = item) {
-                        offersViewModel.toggleFavorite(item)
                         offersViewModel.setSelected(item)
                         navController.navigate(Routes.DetailsScreen.route)
                     }

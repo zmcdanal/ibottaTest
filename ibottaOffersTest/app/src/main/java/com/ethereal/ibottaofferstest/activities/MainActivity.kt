@@ -16,6 +16,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.ethereal.ibottaofferstest.routes.Routes
+import com.ethereal.ibottaofferstest.screens.CartScreen
 import com.ethereal.ibottaofferstest.screens.DetailsScreen
 import com.ethereal.ibottaofferstest.screens.OffersGridScreen
 import com.ethereal.ibottaofferstest.ui.theme.IbottaOffersTestTheme
@@ -54,6 +55,10 @@ class MainActivity : ComponentActivity() {
 
                         composable(Routes.DetailsScreen.route) {
                             DetailsScreen(offersViewModel = offersViewModel)
+                        }
+
+                        composable(Routes.CartScreen.route) {
+                            CartScreen(offersViewModel = offersViewModel)
                         }
                     }
                 }

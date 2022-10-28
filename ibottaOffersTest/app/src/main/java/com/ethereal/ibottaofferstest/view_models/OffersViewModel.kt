@@ -15,6 +15,7 @@ import java.io.ByteArrayOutputStream
 class OffersViewModel(context: Context) : ViewModel() {
 
     private val offers = arrayListOf<Offer>().toMutableStateList()
+    private val cart = arrayListOf<Offer>().toMutableStateList()
     private var currentSelection: MutableState<Offer?> = mutableStateOf(null)
     private var sorted = mutableStateOf(false)
 
@@ -53,12 +54,20 @@ class OffersViewModel(context: Context) : ViewModel() {
         }
     }
 
-    fun toggleFavorite(offer: Offer) {
-        if (offers.contains(offer)) {
-            offers.find { it.id == offer.id }?.favorited =
-                !offers.find { it.id == offer.id }?.favorited!!
+    fun getCart(): List<Offer> {
+        return cart
+    }
+
+    fun toggleFavorite(onComplete: () -> Unit) {
+        currentSelection.value!!.favorited = !currentSelection.value!!.favorited
+        onComplete()
+    }
+
+    fun toggleCart() {
+        if (cart.contains(currentSelection.value)) {
+            cart.remove(currentSelection.value)
         } else {
-            Log.e("OffersViewModel", "toggleFavorite: Error finding offer in Offer List")
+            cart.add(currentSelection.value!!)
         }
     }
 }

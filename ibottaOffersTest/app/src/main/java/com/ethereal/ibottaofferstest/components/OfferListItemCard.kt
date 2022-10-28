@@ -36,7 +36,7 @@ import com.ethereal.ibottaofferstest.ui.theme.IbottaOffersTestTheme
 
 @Composable
 fun OfferListItemCard(offer: Offer, onClick: () -> Unit) {
-    
+
     Box(modifier = Modifier.clickable { onClick() }) {
         Column(
             verticalArrangement = Arrangement.Center,
@@ -111,7 +111,10 @@ fun OfferListItemCard(offer: Offer, onClick: () -> Unit) {
         }
         Column(modifier = Modifier.fillMaxSize()) {
             if (offer.favorited) {
-                Image(painter = painterResource(id = R.drawable.favorite_filled_24), contentDescription = "favorite")
+                Image(
+                    painter = painterResource(id = R.drawable.favorite_filled_24),
+                    contentDescription = "favorite"
+                )
             }
         }
     }

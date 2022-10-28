@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
 private val DarkColorPalette = darkColors(
-    primary = Purple200,
+    primary = PurchaseColor,
     primaryVariant = NavButtonColor,
     secondary = Color.White,
     background = Color.Black,
@@ -16,7 +16,7 @@ private val DarkColorPalette = darkColors(
 )
 
 private val LightColorPalette = lightColors(
-    primary = Purple500,
+    primary = PurchaseColor,
     primaryVariant = NavButtonColor,
     secondary = AmountColor,
     background = Color.White,
