@@ -1,6 +1,5 @@
 package com.ethereal.ibottaofferstest.screens
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -15,6 +14,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -30,7 +30,7 @@ import com.ethereal.ibottaofferstest.view_models.LocalNavController
 import com.ethereal.ibottaofferstest.view_models.OffersViewModel
 
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OffersGridScreen(offersViewModel: OffersViewModel) {
     val navController = LocalNavController.current
@@ -57,8 +57,8 @@ fun OffersGridScreen(offersViewModel: OffersViewModel) {
                             .clickable {
                                 navController.navigate(Routes.CartScreen.route)
                             }
+                            .testTag("cart")
                     ) {
-
                         Icon(
                             painter = painterResource(id = R.drawable.shopping_cart_24),
                             tint = MaterialTheme.colors.primary,

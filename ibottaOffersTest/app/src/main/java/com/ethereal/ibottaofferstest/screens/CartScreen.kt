@@ -1,7 +1,6 @@
 package com.ethereal.ibottaofferstest.screens
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -16,19 +15,18 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ethereal.ibottaofferstest.R
 import com.ethereal.ibottaofferstest.components.CartItemCard
 import com.ethereal.ibottaofferstest.components.RoundedFAB
 import com.ethereal.ibottaofferstest.components.popups.NotificationPopup
-import com.ethereal.ibottaofferstest.ui.theme.IbottaOffersTestTheme
 import com.ethereal.ibottaofferstest.view_models.LocalNavController
 import com.ethereal.ibottaofferstest.view_models.OffersViewModel
 
@@ -49,12 +47,17 @@ fun CartScreen(offersViewModel: OffersViewModel) {
                     )
                 },
                 actions = {
-                    IconButton(onClick = { deleteAllState = !deleteAllState }) {
-                        Icon(
-                            imageVector = Icons.Default.Delete,
-                            contentDescription = "Delete",
-                            tint = MaterialTheme.colors.primary
-                        )
+                    if (offersViewModel.getCart().isNotEmpty()) {
+                        IconButton(
+                            onClick = { deleteAllState = !deleteAllState },
+                            modifier = Modifier.semantics { contentDescription = "Empty Cart" }
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Delete,
+                                contentDescription = "Empty Cart Icon",
+                                tint = MaterialTheme.colors.primary
+                            )
+                        }
                     }
                 },
                 navigationIcon = {
@@ -80,6 +83,7 @@ fun CartScreen(offersViewModel: OffersViewModel) {
                     },
                     modifier = Modifier
                         .fillMaxWidth(.9f)
+                        .semantics { contentDescription = "Purchase" }
                 )
             }
         }

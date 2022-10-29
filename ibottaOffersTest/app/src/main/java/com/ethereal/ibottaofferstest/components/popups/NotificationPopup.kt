@@ -1,6 +1,5 @@
 package com.ethereal.ibottaofferstest.components.popups
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
@@ -10,7 +9,8 @@ import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -18,7 +18,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
 import com.ethereal.ibottaofferstest.R
 
 @Composable
@@ -80,6 +79,7 @@ fun NotificationPopup(
                             modifier = Modifier
                                 .weight(.5f)
                                 .height(60.dp)
+                                .semantics { contentDescription = "onDismiss" }
                         ) {
                             Row(
                                 horizontalArrangement = Arrangement.Center,
@@ -101,6 +101,7 @@ fun NotificationPopup(
                                 modifier = Modifier
                                     .weight(.5f)
                                     .height(60.dp)
+                                    .semantics { contentDescription = "onPositive" }
                             ) {
                                 Row(
                                     horizontalArrangement = Arrangement.Center,

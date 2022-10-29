@@ -2,7 +2,6 @@ package com.ethereal.ibottaofferstest.screens
 
 import android.util.Log
 import androidx.compose.foundation.*
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -17,6 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -62,14 +63,13 @@ fun DetailsScreen(offersViewModel: OffersViewModel) {
                             .clickable {
                                 navController.navigate(Routes.CartScreen.route)
                             }
+                            .semantics { contentDescription = "cart" }
                     ) {
-
                         Icon(
                             painter = painterResource(id = R.drawable.shopping_cart_24),
                             tint = MaterialTheme.colors.primary,
-                            contentDescription = "Cart"
+                            contentDescription = "CartIcon"
                         )
-
                     }
                 },
                 navigationIcon = {
@@ -87,24 +87,27 @@ fun DetailsScreen(offersViewModel: OffersViewModel) {
             )
         },
         floatingActionButton = {
+            var cartText by remember {
+                mutableStateOf("Add to Cart")
+            }
+            cartText = if (offersViewModel.getCart().contains(offersViewModel.getSelected())) {
+                "Remove from Cart"
+            } else {
+                "Add to Cart"
+            }
+
             Row(
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth(.9F)
             ) {
-                if (offersViewModel.getCart().contains(offersViewModel.getSelected())) {
-                    RoundedFAB(
-                        text = "Remove from Cart",
-                        onClick = { offersViewModel.toggleCart() },
-                        modifier = Modifier.fillMaxWidth(.9F)
-                    )
-                } else {
-                    RoundedFAB(
-                        text = "Add to Cart",
-                        onClick = { offersViewModel.toggleCart() },
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                }
+                RoundedFAB(
+                    text = cartText,
+                    onClick = { offersViewModel.toggleCart() },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .semantics { contentDescription = "Add to Cart" }
+                )
             }
         }
     ) {

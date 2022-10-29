@@ -23,7 +23,8 @@ class OffersViewModel(context: Context) : ViewModel() {
     init {
         // If this was much more data, I would likely run this within an async function
         try {
-            val jsonString = context.assets.open("Offers.json")
+            val jsonString =
+                context.assets.open("Offers.json")
             val baos = ByteArrayOutputStream()
             jsonString.use { it.copyTo(baos) }
             val inputAsString = baos.toString()
