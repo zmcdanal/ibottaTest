@@ -110,7 +110,7 @@ fun CartScreen(offersViewModel: OffersViewModel) {
                     Text(
                         text = "Total",
                         color = MaterialTheme.colors.secondary,
-                        fontSize = 15.sp,
+                        fontSize = 18.sp,
                         fontFamily = FontFamily(Font(R.font.roboto_bold)),
                         fontWeight = FontWeight.Medium,
                         modifier = Modifier
@@ -120,7 +120,7 @@ fun CartScreen(offersViewModel: OffersViewModel) {
                     Spacer(modifier = Modifier.weight(.1f))
 
                     Text(
-                        text = "5.99",
+                        text = offersViewModel.getCartTotal(),
                         color = MaterialTheme.colors.primary,
                         textAlign = TextAlign.End,
                         fontSize = 20.sp,
@@ -130,6 +130,22 @@ fun CartScreen(offersViewModel: OffersViewModel) {
                             .weight(.4f)
                             .padding(end = 8.dp)
                     )
+                }
+
+                Row(
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxWidth(.9F)
+                ) {
+
+                    RoundedFAB(
+                        text = "Purchase",
+                        onClick = {
+                            // Nothing is supposed to happen
+                        },
+                        modifier = Modifier.fillMaxWidth()
+                    )
+
                 }
             }
         }

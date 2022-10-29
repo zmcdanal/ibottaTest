@@ -11,6 +11,8 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import java.io.ByteArrayOutputStream
+import java.math.BigDecimal
+import java.math.RoundingMode
 
 class OffersViewModel(context: Context) : ViewModel() {
 
@@ -69,5 +71,19 @@ class OffersViewModel(context: Context) : ViewModel() {
         } else {
             cart.add(currentSelection.value!!)
         }
+    }
+
+    fun getCartTotal(): String {
+        var total = BigDecimal(0.00)
+        cart.forEach {
+            try {
+                val priceString = it.valueToString()
+                val price = priceString[0].split("$")
+                total += price[1].toBigDecimal()
+            } catch (ex: Exception) {
+                Log.e("OffersViewModel", "getCartTotal: ", ex)
+            }
+        }
+        return "$${total.setScale(2, RoundingMode.UNNECESSARY)}"
     }
 }
