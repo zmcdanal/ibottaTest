@@ -2,7 +2,6 @@ package com.ethereal.ibottaofferstest.view_models
 
 import android.content.Context
 import android.util.Log
-import android.widget.Toast
 import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
 import com.ethereal.ibottaofferstest.objects.Offer
@@ -22,12 +21,14 @@ class OffersViewModel(context: Context) : ViewModel() {
     private var sorted = mutableStateOf(false)
 
     init {
+        // If this was much more data, I would likely run this within an async function
         try {
             val jsonString = context.assets.open("Offers.json")
             val baos = ByteArrayOutputStream()
             jsonString.use { it.copyTo(baos) }
             val inputAsString = baos.toString()
-            val dataType = Types.newParameterizedType(MutableList::class.java, Offer::class.java)
+            val dataType =
+                Types.newParameterizedType(MutableList::class.java, Offer::class.java)
             val adapter: JsonAdapter<List<Offer>> =
                 Moshi.Builder().add(KotlinJsonAdapterFactory()).build().adapter(dataType)
             offers.addAll(adapter.fromJson(inputAsString)!!)
@@ -85,5 +86,9 @@ class OffersViewModel(context: Context) : ViewModel() {
             }
         }
         return "$${total.setScale(2, RoundingMode.UNNECESSARY)}"
+    }
+
+    fun emptyCart() {
+        cart.clear()
     }
 }

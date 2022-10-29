@@ -96,7 +96,7 @@ fun DetailsScreen(offersViewModel: OffersViewModel) {
                     RoundedFAB(
                         text = "Remove from Cart",
                         onClick = { offersViewModel.toggleCart() },
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(.9F)
                     )
                 } else {
                     RoundedFAB(
@@ -118,7 +118,7 @@ fun DetailsScreen(offersViewModel: OffersViewModel) {
             Box(
                 modifier = Modifier.background(MaterialTheme.colors.onBackground)
             ) {
-
+                // Async Image Loader
                 SubcomposeAsyncImage(
                     ImageRequest.Builder(LocalContext.current)
                         .data(offersViewModel.getSelected().url)
@@ -159,6 +159,7 @@ fun DetailsScreen(offersViewModel: OffersViewModel) {
                     },
                     modifier = Modifier.align(Alignment.TopEnd)
                 ) {
+                    // Favorite/Unfavorite the item
                     if (favoriteState) {
                         Icon(
                             painter = painterResource(id = R.drawable.favorite_filled_24),
@@ -177,6 +178,7 @@ fun DetailsScreen(offersViewModel: OffersViewModel) {
 
             Spacer(modifier = Modifier.height(8.dp))
             Row(modifier = Modifier.fillMaxWidth()) {
+                // Name
                 Text(
                     text = offersViewModel.getSelected().name,
                     color = MaterialTheme.colors.secondary,
@@ -185,16 +187,19 @@ fun DetailsScreen(offersViewModel: OffersViewModel) {
                     fontWeight = FontWeight.Medium,
                     modifier = Modifier.weight(.5f)
                 )
-                Spacer(modifier = Modifier.weight(.1f))
+                Spacer(modifier = Modifier.weight(.05f))
+
+                // Price
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center,
-                    modifier = Modifier.weight(.4F)
+                    modifier = Modifier.weight(.45F)
                 ) {
                     Text(
                         text = offersViewModel.getSelected().valueToString()[0],
                         color = MaterialTheme.colors.primary,
                         textAlign = TextAlign.End,
+                        maxLines = 1,
                         fontSize = 20.sp,
                         fontFamily = FontFamily(Font(R.font.roboto_bold)),
                         fontWeight = FontWeight.Medium,
@@ -215,6 +220,8 @@ fun DetailsScreen(offersViewModel: OffersViewModel) {
             }
 
             Spacer(modifier = Modifier.height(3.dp))
+
+            // Description
             Text(
                 text = offersViewModel.getSelected().description,
                 color = MaterialTheme.colors.secondary,
@@ -225,6 +232,8 @@ fun DetailsScreen(offersViewModel: OffersViewModel) {
             )
 
             Spacer(modifier = Modifier.height(15.dp))
+
+            // Terms
             Text(
                 text = offersViewModel.getSelected().terms,
                 color = MaterialTheme.colors.secondary,
@@ -233,6 +242,7 @@ fun DetailsScreen(offersViewModel: OffersViewModel) {
                 fontWeight = FontWeight.Medium,
                 modifier = Modifier.fillMaxWidth()
             )
+            Spacer(modifier = Modifier.height(75.dp))
         }
     }
 }
