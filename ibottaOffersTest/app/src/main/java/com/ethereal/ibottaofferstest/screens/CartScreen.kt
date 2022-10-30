@@ -39,10 +39,12 @@ import com.ethereal.ibottaofferstest.view_models.OffersViewModel
 fun CartScreen(offersViewModel: OffersViewModel) {
     val navController = LocalNavController.current
     val mAct = LocalContext.current as MainActivity
+    // For toggling the delete all popup
     var deleteAllState by remember { mutableStateOf(false) }
+
+    // Top Nav Bar and overall Scaffold
     Scaffold(
         topBar = {
-
             CenterAlignedTopAppBar(
                 title = {
                     Text(
@@ -52,6 +54,7 @@ fun CartScreen(offersViewModel: OffersViewModel) {
                     )
                 },
                 actions = {
+                    // Toggles the deleteAll Popup to remove all items from cart
                     if (offersViewModel.getCart().isNotEmpty()) {
                         IconButton(
                             onClick = { deleteAllState = !deleteAllState },
@@ -66,6 +69,7 @@ fun CartScreen(offersViewModel: OffersViewModel) {
                     }
                 },
                 navigationIcon = {
+                    // Pops the back stack
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
                             imageVector = Icons.Default.KeyboardArrowLeft,
@@ -80,6 +84,8 @@ fun CartScreen(offersViewModel: OffersViewModel) {
             )
         },
         floatingActionButton = {
+            // Wasn't sure what I wanted to make this button do so I decided to scrambled all names of the offers
+            // Original idea was to route you guys to youtube to a RickRoll lol
             if (offersViewModel.getCart().isNotEmpty()) {
                 RoundedFAB(
                     text = "Purchase",
@@ -102,8 +108,7 @@ fun CartScreen(offersViewModel: OffersViewModel) {
             }
         }
     ) {
-
-
+        // If cart is not empty, show the list of items
         if (offersViewModel.getCart().isNotEmpty()) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -152,6 +157,7 @@ fun CartScreen(offersViewModel: OffersViewModel) {
                         )
                         Spacer(modifier = Modifier.weight(.1f))
 
+                        // Total
                         Text(
                             text = offersViewModel.getCartTotal(),
                             color = MaterialTheme.colors.primary,
@@ -167,6 +173,7 @@ fun CartScreen(offersViewModel: OffersViewModel) {
                 }
             }
         } else {
+            // If cart is empty, show placeholder
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,

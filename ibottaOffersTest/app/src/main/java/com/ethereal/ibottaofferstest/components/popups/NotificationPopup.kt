@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.ethereal.ibottaofferstest.R
 
+// Simple Reusable popup for a positive/negative message
 @Composable
 fun NotificationPopup(
     onDismiss: () -> Unit,

@@ -35,12 +35,16 @@ import com.ethereal.ibottaofferstest.view_models.OffersViewModel
 fun OffersGridScreen(offersViewModel: OffersViewModel) {
     val navController = LocalNavController.current
     var list by remember { mutableStateOf(offersViewModel.getOffers()) }
+
+    // For toggling the nav bar title
     var navTitle by remember { mutableStateOf("Offers") }
 
+    // Top Nav Bar and overall Scaffold
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
+                    // NavBar Title
                     Text(
                         text = navTitle,
                         fontFamily = FontFamily(Font(R.font.roboto_bold)),
@@ -48,6 +52,7 @@ fun OffersGridScreen(offersViewModel: OffersViewModel) {
                     )
                 },
                 actions = {
+                    // Shopping cart icon which displays count of items in cart
                     BadgedBox(
                         badge = {
                             if (offersViewModel.getCart().isNotEmpty())
@@ -69,6 +74,8 @@ fun OffersGridScreen(offersViewModel: OffersViewModel) {
                 },
                 navigationIcon = {
                     IconButton(onClick = {
+                        // Toggles between All Offers and Favorites
+                        // This will recompose the screen
                         offersViewModel.toggleFilter()
                         list = offersViewModel.getOffers()
                         navTitle = if (navTitle == "Offers") {
@@ -92,6 +99,7 @@ fun OffersGridScreen(offersViewModel: OffersViewModel) {
         }
     ) {
 
+        // Divider
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -99,8 +107,8 @@ fun OffersGridScreen(offersViewModel: OffersViewModel) {
                 .background(MaterialTheme.colors.secondary)
         )
 
+        // If list is not empty, show the lazy grid of offers
         if (list.isNotEmpty()) {
-
             LazyVerticalGrid(
                 verticalArrangement = Arrangement.spacedBy(24.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -114,6 +122,7 @@ fun OffersGridScreen(offersViewModel: OffersViewModel) {
                 modifier = Modifier.fillMaxSize()
             ) {
                 items(list) { item ->
+                    // Single Offer Card
                     OfferListItemCard(offer = item) {
                         offersViewModel.setSelected(item)
                         navController.navigate(Routes.DetailsScreen.route)
@@ -121,6 +130,7 @@ fun OffersGridScreen(offersViewModel: OffersViewModel) {
                 }
             }
         } else {
+            // If offers list is empty, show placeholder
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,

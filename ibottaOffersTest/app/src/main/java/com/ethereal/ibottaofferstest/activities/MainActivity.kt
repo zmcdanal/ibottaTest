@@ -24,6 +24,10 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             IbottaOffersTestTheme {
+                setupContext(this)
+                val navController = rememberNavController()
+
+                // Init of OffersViewModel which will be used on all screens
                 val offersViewModel: OffersViewModel = viewModel(
                     key = "OffersViewModel",
                     factory = viewModelProviderFactoryOf {
@@ -33,9 +37,7 @@ class MainActivity : ComponentActivity() {
                     }
                 )
 
-                val navController = rememberNavController()
-                setupContext(this)
-
+                // Navigation is setup here
                 CompositionLocalProvider(LocalNavController provides navController) {
 
                     NavHost(
@@ -43,14 +45,17 @@ class MainActivity : ComponentActivity() {
                         startDestination = Routes.OffersGridScreen.route
                     ) {
 
+                        // OffersGridScreen
                         composable(Routes.OffersGridScreen.route) {
                             OffersGridScreen(offersViewModel = offersViewModel)
                         }
 
+                        // DetailsScreen
                         composable(Routes.DetailsScreen.route) {
                             DetailsScreen(offersViewModel = offersViewModel)
                         }
 
+                        // CartScreen
                         composable(Routes.CartScreen.route) {
                             CartScreen(offersViewModel = offersViewModel)
                         }

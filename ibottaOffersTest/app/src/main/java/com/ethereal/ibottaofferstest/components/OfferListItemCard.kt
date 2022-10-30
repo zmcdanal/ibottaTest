@@ -30,6 +30,7 @@ import com.ethereal.ibottaofferstest.R
 import com.ethereal.ibottaofferstest.objects.Offer
 import com.ethereal.ibottaofferstest.ui.theme.IbottaOffersTestTheme
 
+// Item Card used on the OffersGridScreen
 @Composable
 fun OfferListItemCard(offer: Offer, onClick: () -> Unit) {
 

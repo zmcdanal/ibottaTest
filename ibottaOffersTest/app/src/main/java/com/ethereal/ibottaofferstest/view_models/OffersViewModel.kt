@@ -12,7 +12,6 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import java.io.ByteArrayOutputStream
 import java.math.BigDecimal
 import java.math.RoundingMode
-import java.util.*
 import kotlin.collections.ArrayList
 
 class OffersViewModel(context: Context) : ViewModel() {
@@ -40,18 +39,22 @@ class OffersViewModel(context: Context) : ViewModel() {
         }
     }
 
+    // The offer that gets used in the details screen
     fun setSelected(offer: Offer) {
         currentSelection.value = offer
     }
 
+    // The offer that gets used in the details screen
     fun getSelected(): Offer {
         return currentSelection.value!!
     }
 
+    // Toggle between All Offers and Favorites
     fun toggleFilter() {
         sorted.value = !sorted.value
     }
 
+    // Grabs all offers and sorts them based on toggle
     fun getOffers(): List<Offer> {
         return if (!sorted.value) {
             offers.sortedBy { !it.favorited }
@@ -60,15 +63,18 @@ class OffersViewModel(context: Context) : ViewModel() {
         }
     }
 
+    // Gets the shopping cart for use on the CartScreen
     fun getCart(): List<Offer> {
         return cart
     }
 
+    // Toggles offer between favorite and unfavorite
     fun toggleFavorite(onComplete: () -> Unit) {
         currentSelection.value!!.favorited = !currentSelection.value!!.favorited
         onComplete()
     }
 
+    // Adds/Removes item from shopping cart
     fun toggleCart() {
         if (cart.contains(currentSelection.value)) {
             cart.remove(currentSelection.value)
@@ -77,6 +83,7 @@ class OffersViewModel(context: Context) : ViewModel() {
         }
     }
 
+    // Computes the total of all items prices in the shopping cart
     fun getCartTotal(): String {
         var total = BigDecimal(0.00)
         cart.forEach {
@@ -91,21 +98,19 @@ class OffersViewModel(context: Context) : ViewModel() {
         return "$${total.setScale(2, RoundingMode.UNNECESSARY)}"
     }
 
+    // Removes all items from cart
     fun emptyCart() {
         cart.clear()
     }
 
+    // FOR FUN - Scrambled all names of offers
     fun scramble(item: Offer) {
         val l: MutableList<Char> = ArrayList()
-        for (c in item.name.toCharArray())  //for each char of the word selectionned, put it in a list
+        for (c in item.name.toCharArray())
             l.add(c)
-        l.shuffle() //shuffle the list
-
-
-        val sb = StringBuilder() //now rebuild the word
-
+        l.shuffle()
+        val sb = StringBuilder()
         for (c in l) sb.append(c)
-
         item.name = sb.toString()
     }
 }

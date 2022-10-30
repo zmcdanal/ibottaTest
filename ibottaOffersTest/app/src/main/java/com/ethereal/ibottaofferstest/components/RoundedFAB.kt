@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.sp
 import com.ethereal.ibottaofferstest.R
 import com.ethereal.ibottaofferstest.ui.theme.IbottaOffersTestTheme
 
+// Floating Action Button used on multiple screens
 @Composable
 fun RoundedFAB(text: String, onClick: () -> Unit, modifier: Modifier) {
     Button(

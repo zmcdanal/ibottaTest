@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.sp
 import com.ethereal.ibottaofferstest.R
 import com.ethereal.ibottaofferstest.objects.Offer
 
+// List item used on the CartScreen
 @Composable
 fun CartItemCard(offer: Offer) {
     Column(

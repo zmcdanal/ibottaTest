@@ -25,7 +25,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.datastore.core.DataStore
 import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
@@ -41,12 +40,16 @@ import com.ethereal.ibottaofferstest.view_models.OffersViewModel
 @Composable
 fun DetailsScreen(offersViewModel: OffersViewModel) {
     val navController = LocalNavController.current
+    // Instead of making the page recompose, this is an easy way to show results
+    // to the user (Toggling of the favorite icon).
     var favoriteState by remember { mutableStateOf(offersViewModel.getSelected().favorited) }
 
+    // Top Nav Bar and overall Scaffold
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
+                    // NavBar Title
                     Text(
                         text = "Details",
                         fontFamily = FontFamily(Font(R.font.roboto_bold)),
@@ -54,6 +57,7 @@ fun DetailsScreen(offersViewModel: OffersViewModel) {
                     )
                 },
                 actions = {
+                    // Shopping cart icon which displays count of items in cart
                     BadgedBox(
                         badge = {
                             if (offersViewModel.getCart().isNotEmpty())
@@ -74,6 +78,7 @@ fun DetailsScreen(offersViewModel: OffersViewModel) {
                     }
                 },
                 navigationIcon = {
+                    // Pops the backstack
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
                             imageVector = Icons.Default.KeyboardArrowLeft,
@@ -88,6 +93,7 @@ fun DetailsScreen(offersViewModel: OffersViewModel) {
             )
         },
         floatingActionButton = {
+            // Toggles text depending on if cart is empty or not
             var cartText by remember {
                 mutableStateOf("Add to Cart")
             }
@@ -102,6 +108,7 @@ fun DetailsScreen(offersViewModel: OffersViewModel) {
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth(.9F)
             ) {
+                // Adds/Remove item from cart
                 RoundedFAB(
                     text = cartText,
                     onClick = { offersViewModel.toggleCart() },
@@ -155,6 +162,7 @@ fun DetailsScreen(offersViewModel: OffersViewModel) {
                     }
                 }
 
+                // Toggles the offers favorite or not
                 IconButton(
                     onClick = {
                         offersViewModel.toggleFavorite {
