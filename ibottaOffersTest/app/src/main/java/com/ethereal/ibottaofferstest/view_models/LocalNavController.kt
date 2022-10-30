@@ -5,6 +5,7 @@ import androidx.compose.runtime.ProvidableCompositionLocal
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.navigation.NavHostController
 
+// Makes it possible to call to NavController from anywhere within the app
 lateinit var LocalNavController: ProvidableCompositionLocal<NavHostController>
 
 fun setupContext(contextIn: Context) {

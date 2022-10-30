@@ -1,5 +1,6 @@
 package com.ethereal.ibottaofferstest.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -15,6 +16,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.Font
@@ -24,9 +26,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ethereal.ibottaofferstest.R
+import com.ethereal.ibottaofferstest.activities.MainActivity
 import com.ethereal.ibottaofferstest.components.CartItemCard
 import com.ethereal.ibottaofferstest.components.RoundedFAB
 import com.ethereal.ibottaofferstest.components.popups.NotificationPopup
+import com.ethereal.ibottaofferstest.routes.Routes
 import com.ethereal.ibottaofferstest.view_models.LocalNavController
 import com.ethereal.ibottaofferstest.view_models.OffersViewModel
 
@@ -34,6 +38,7 @@ import com.ethereal.ibottaofferstest.view_models.OffersViewModel
 @Composable
 fun CartScreen(offersViewModel: OffersViewModel) {
     val navController = LocalNavController.current
+    val mAct = LocalContext.current as MainActivity
     var deleteAllState by remember { mutableStateOf(false) }
     Scaffold(
         topBar = {
@@ -80,6 +85,15 @@ fun CartScreen(offersViewModel: OffersViewModel) {
                     text = "Purchase",
                     onClick = {
                         // Nothing is supposed to happen
+                        offersViewModel.getOffers().forEach {
+                            offersViewModel.scramble(it)
+                        }
+                        mAct.runOnUiThread {
+                            Toast.makeText(mAct, "Scrambled!", Toast.LENGTH_LONG).show()
+                        }
+                        navController.navigate(Routes.OffersGridScreen.route) {
+                            popUpTo(0)
+                        }
                     },
                     modifier = Modifier
                         .fillMaxWidth(.9f)

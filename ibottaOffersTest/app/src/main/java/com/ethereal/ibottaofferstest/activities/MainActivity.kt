@@ -21,6 +21,7 @@ import com.ethereal.ibottaofferstest.view_models.setupContext
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             IbottaOffersTestTheme {
                 val offersViewModel: OffersViewModel = viewModel(
@@ -59,3 +60,4 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+

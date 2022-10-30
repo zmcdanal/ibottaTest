@@ -12,6 +12,8 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import java.io.ByteArrayOutputStream
 import java.math.BigDecimal
 import java.math.RoundingMode
+import java.util.*
+import kotlin.collections.ArrayList
 
 class OffersViewModel(context: Context) : ViewModel() {
 
@@ -91,5 +93,19 @@ class OffersViewModel(context: Context) : ViewModel() {
 
     fun emptyCart() {
         cart.clear()
+    }
+
+    fun scramble(item: Offer) {
+        val l: MutableList<Char> = ArrayList()
+        for (c in item.name.toCharArray())  //for each char of the word selectionned, put it in a list
+            l.add(c)
+        l.shuffle() //shuffle the list
+
+
+        val sb = StringBuilder() //now rebuild the word
+
+        for (c in l) sb.append(c)
+
+        item.name = sb.toString()
     }
 }

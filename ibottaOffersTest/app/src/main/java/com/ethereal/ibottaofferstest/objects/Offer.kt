@@ -6,7 +6,7 @@ import com.squareup.moshi.JsonClass
 class Offer(
     val id: String,
     val url: String?,
-    val name: String,
+    var name: String,
     val description: String,
     val terms: String,
     val current_value: String,

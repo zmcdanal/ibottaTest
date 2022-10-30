@@ -35,13 +35,14 @@ import com.ethereal.ibottaofferstest.view_models.OffersViewModel
 fun OffersGridScreen(offersViewModel: OffersViewModel) {
     val navController = LocalNavController.current
     var list by remember { mutableStateOf(offersViewModel.getOffers()) }
+    var navTitle by remember { mutableStateOf("Offers") }
 
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
                     Text(
-                        text = "Offers",
+                        text = navTitle,
                         fontFamily = FontFamily(Font(R.font.roboto_bold)),
                         color = MaterialTheme.colors.secondary
                     )
@@ -70,6 +71,11 @@ fun OffersGridScreen(offersViewModel: OffersViewModel) {
                     IconButton(onClick = {
                         offersViewModel.toggleFilter()
                         list = offersViewModel.getOffers()
+                        navTitle = if (navTitle == "Offers") {
+                            "Favorites Only"
+                        } else {
+                            "Offers"
+                        }
                     }
                     ) {
                         Icon(

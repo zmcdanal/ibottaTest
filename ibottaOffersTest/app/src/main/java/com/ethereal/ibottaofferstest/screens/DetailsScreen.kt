@@ -25,6 +25,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.datastore.core.DataStore
 import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
@@ -41,9 +42,9 @@ import com.ethereal.ibottaofferstest.view_models.OffersViewModel
 fun DetailsScreen(offersViewModel: OffersViewModel) {
     val navController = LocalNavController.current
     var favoriteState by remember { mutableStateOf(offersViewModel.getSelected().favorited) }
+
     Scaffold(
         topBar = {
-
             CenterAlignedTopAppBar(
                 title = {
                     Text(
